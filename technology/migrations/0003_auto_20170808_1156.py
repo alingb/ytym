@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('technology', '0002_auto_20170808_1134'),
+    ]
+
+    operations = [
+        migrations.AlterField(
+            model_name='error',
+            name='product_name',
+            field=models.CharField(max_length=250, verbose_name=b'\xe4\xba\xa7\xe5\x93\x81\xe5\x90\x8d\xe7\xa7\xb0', choices=[(b'ASR1100', b'\xe5\x8d\x8e\xe7\xa1\x95ASR1100'), (b'K880G3', b'\xe8\x8b\xb1\xe4\xb8\x9a\xe8\xbe\xbeK880G3'), (b'ASD2550', b'\xe5\x8d\x8e\xe7\xa1\x95ASD2550'), (b'RS720Q-E8', b'\xe5\x8d\x8e\xe7\xa1\x95RS720Q-E8'), (b'RS300-E9-PS4', b'\xe5\x8d\x8e\xe7\xa1\x95RS300-E9-PS4'), (b'ASR2612', b'\xe5\x8d\x8e\xe7\xa1\x95ASR2612'), (b'D51B-2U', b'\xe5\xb9\xbf\xe8\xbe\xbeD51B-2U'), (b'T41S-2U', b'\xe5\xb9\xbf\xe8\xbe\xbeT41S-2U'), (b'RS300-E9-PS4', b'\xe5\x8d\x8e\xe7\xa1\x95RS300-E9-PS4'), (b'RS520-E8-RS8', b'\xe5\x8d\x8e\xe7\xa1\x95RS520-E8-RS8'), (b'S210-X22RQ', b'\xe5\xb9\xbf\xe8\xbe\xbeS210-X22RQ'), (b'ESC4000G3', b'\xe5\x8d\x8e\xe7\xa1\x95ESC4000G3'), (b'RS520-E8-RS12', b'\xe5\x8d\x8e\xe7\xa1\x95RS520-E8-RS12'), (b'other', b'\xe5\x85\xb6\xe4\xbb\x96')]),
+        ),
+        migrations.AlterField(
+            model_name='error',
+            name='project_name',
+            field=models.CharField(max_length=250, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe5\x90\x8d\xe7\xa7\xb0', choices=[(b'ELOG', b'\xe9\x94\x90\xe6\x8d\xb7ELOG'), (b'RG-RCP', b'\xe9\x94\x90\xe6\x8d\xb7RG-RCP'), (b'RCD6000-Office', b'\xe9\x94\x90\xe6\x8d\xb7RCD6000-Office'), (b'RCD6000-Main', b'\xe9\x94\x90\xe6\x8d\xb7RCD6000-Main'), (b'RG-SE04', b'\xe9\x94\x90\xe6\x8d\xb7RG-SE04'), (b'RG-ONC-AIO-CTL', b'\xe9\x94\x90\xe6\x8d\xb7RG-ONC-AIO-CTL'), (b'RG-RCM1000-Office', b'\xe9\x94\x90\xe6\x8d\xb7RG-RCM1000-Office'), (b'RG-RCM1000-Edu', b'\xe9\x94\x90\xe6\x8d\xb7RG-RCM1000-Edu'), (b'RG-RCM1000-Smart', b'\xe9\x94\x90\xe6\x8d\xb7RG-RCM1000-Smart'), (b'MDBE', b'\xe7\xbe\x8e\xe7\x94\xb5\xe8\xb4\x9d\xe5\xb0\x94'), (b'ZJCC', b'\xe5\xb9\xbf\xe4\xb8\x9c\xe7\xb4\xab\xe6\x99\xb6\xe5\xad\x98\xe5\x82\xa8'), (b'UDS1022-G', b'\xe9\x94\x90\xe6\x8d\xb7UDS1022-G'), (b'UDS1022-G1', b'\xe9\x94\x90\xe6\x8d\xb7UDS1022-G1'), (b'UDS2000-C', b'\xe9\x94\x90\xe6\x8d\xb7UDS2000-C'), (b'UDS2000-E', b'\xe9\x94\x90\xe6\x8d\xb7UDS2000-E'), (b'UDS2000-E1', b'\xe9\x94\x90\xe6\x8d\xb7UDS2000-E1'), (b'RG-CES', b'\xe9\x94\x90\xe6\x8d\xb7RG-CES'), (b'RG-CPV-M', b'\xe9\x94\x90\xe6\x8d\xb7RG-CPV-M'), (b'RG-CPV-S', b'\xe9\x94\x90\xe6\x8d\xb7RG-CPV-S'), (b'2513(M1)', b'\xe4\xb8\x89\xe7\x9b\x9f2513(M1)'), (b'2513(M3)', b'\xe4\xb8\x89\xe7\x9b\x9f2513(M3)'), (b'2513(VM3)', b'\xe4\xb8\x89\xe7\x9b\x9f2513(VM3)'), (b'ASERVER-2400', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dASERVER-2400'), (b'ASERVER-2405', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dASERVER-2405'), (b'VDS-5050', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dVDS-5050'), (b'VDS-6550', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dVDS-6550'), (b'VDS-8050', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dVDS-8050'), (b'VDS-G680', b'\xe6\xb7\xb1\xe4\xbf\xa1\xe6\x9c\x8dVDS-G680'), (b'other', b'\xe5\x85\xb6\xe4\xbb\x96')]),
+        ),
+    ]

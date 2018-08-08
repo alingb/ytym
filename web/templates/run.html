@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<style type="text/css">
+  .left {float:left;}
+  .body {text-align:center}
+  .right {float:right;}
+  .test {float:right;width:750px;}
+  th {color:green;text-align:left}
+  .body span{color:red;font-size:15px}
+  .left span{color:red;font-size:15px}
+  #header {
+    background-color:blue;
+    color:white;
+    text-align:center;
+    padding:5px;
+  }
+  #nav {
+    line-height:30px;
+    background-color:green;
+    height:600px;
+    width:100px;
+    float:left;
+    padding:5px;	      
+  }
+  #section {
+    width:730px;
+    float:right;
+    padding:5px;	 	 
+  }
+  #left {
+    width:700px;
+    float:right;
+  }
+  #footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;	 	 
+  }
+</style>
+<script type="text/javascript">
+function disable()
+  {
+  document.getElementById("filename").disabled=true
+  document.getElementById("filename").hidden=true
+  }
+function enable()
+  {
+  document.getElementById("filename").disabled=false
+  document.getElementById("filename").hidden=false
+  }
+</script>
+
+
+<div>
+Welcome,  {{ user }} <a href="/logout">logout</a>
+</div>
+</head>
+<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+
+  <div id="header">
+   <h1>执行状况<h1>
+  </div>
+<body bgcolor="Gainsboro" >
+<form action="/test/" method="post" enctype="multipart/form-data">
+<br><br>
+<table  width="85%" border="1" align="center" style="font-size:14px word-break:break-all; word-wrap:break-all;"> 
+  <tbody>
+  {% for r in ret%}
+    <tr>
+    <th>IP</th><td>{{ r.ip }}</td>
+    <th>TIME</th><td>{{ r.time }}</td>
+    <th>status</th><td> {{r.status}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+  </br>
+  <div class="body"><input type="button" value="确定" onclick="javascrtpt:window.location.href='http://192.168.1.57/technology/web/host/'"></div>
+</body>
+</html>
+

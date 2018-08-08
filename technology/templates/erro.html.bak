@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="refresh" content="240" charset=UTF-8>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+<script>
+    function num(){
+        var Num="",
+        for (var i=0;i<6;i++)
+        {
+          Num+=Math.floor(Math.random()*10);
+        }
+        document.getElementById("bh").innerText=Num;
+        }
+    setInterval(function() {num()});
+</script>
+  <style type="text/css">
+  .left {float:left}
+  .body {text-align:center}
+  .right {float:right}
+  td {color:green}
+  </style>
+ <title>
+    故障记录
+ </title>
+<h1 align="center"> 生产记录问题汇总</h1>
+<h3 id="time1" style="color: blueviolet;" class="body"></h3>
+</head>
+<body bgcolor="Gainsboro" >
+<form action="/erro/" method="post" enctype="multipart/form-data">
+<table width="100%" border="0"  style="font-size:25px">
+  <tr>
+    <th ></th> 
+    <th ></th> 
+    <th ></th> 
+    <th ></th> 
+  </tr>
+  <tbody >
+        <tr>
+        <td class="body">bug编号:</td>
+        <td><input name="num" value="{{ num }}"></td>
+        </tr>
+        <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.product_name.errors }} 
+        <label> 产品名称:</label>
+        </td>
+        <td >
+        {{ form.product_name }}</br>{{ form.product_name_other }}
+        </div>
+        </td>
+        <td class="body">
+        <div class="fieldWrapper">
+        {{ form.project_name.errors }}
+        <label>项目名称: </label>
+        </td>
+        <td >
+        {{ form.project_name }}</br> {{ form.project_name_other }}
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.bug_person.errors }}
+        <label> bug负责人:</label>
+        </td>
+        <td >
+        {{ form.bug_person }}
+        </div>
+        </td>
+        <td class="body"<div class="fieldWrapper">
+        {{ form.test_person.errors }}
+        <label>测试人员:</label>
+        </td>
+        <td >
+        {{ form.test_person }}
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.email.errors }}
+        <label> 抄送人员:</label>
+        </td>
+        <td >
+        {{ form.email }}
+        </div>
+        </td>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.bug_level.errors }}
+        <label>BUG等级:</label>
+        </td>
+        <td >
+        {{ form.bug_level }}
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.discovery_phase.errors }}
+        <label>发现途径:</label>
+        </td>
+        <td >
+        {{ form.discovery_phase }}</br> {{ form.discovery_phase_other }}
+        </div>
+        </td>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.exclusion_phase.errors }}
+        <label>处理阶段:</label>
+        </td>
+        <td >
+        {{ form.exclusion_phase }}
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.customer_name.errors }}
+        <label>客户名称:</label>
+        </td>
+        <td type="time">
+        {{ form.customer_name }}</br> {{ form.customer_name_other }}
+        </div>
+        </td>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.enclosure.errors }}
+        <label>附件上传:</label>
+        </td>
+        <td >
+        {{ form.enclosure }}
+        </div>
+        </td>
+      </tr>
+</table>
+<table width="120%" border="0"  style="font-size:25px">
+  <tr>
+    <th></th> 
+    <th></th> 
+    <th></th> 
+    <th></th> 
+  </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.bug_describe.errors }}
+        <label>BUG简述:</label>
+        </td>
+        <td >
+        {{ form.bug_describe }}
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="body"><div class="fieldWrapper">
+        {{ form.bug_record.errors }}
+        <label>BUG记录:</label>
+        </td>
+        <td >
+        {{ form.bug_record }}
+        </div>
+        </td>
+      </tr>
+  <tbody/>
+</table>
+    <p class="body"><input type="submit" style="font-size:25px" value="提交"/></p>
+</form>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+  <style type="text/css">
+  .left {float:left}
+  .body {text-align:center}
+  .right {float:right}
+  td {color:green;text-align:left}
+  .body span{color:red;font-size:15px}
+  .left span{color:red;font-size:15px}
+  </style>
+<div>
+Welcome,  {{ user }} <a href="/logout">logout</a>
+<h1 align="center"> 详细信息</h1>
+</div>
+<!--<h3 id="time1" style="color: blueviolet;" class="body"></h3>-->
+<!--<div class="body"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">汇总信息</button></div>-->
+<title> 详细信息 </title>
+</head>
+<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+
+<body bgcolor="Gainsboro" >
+<table  border="5" align="center" style="font-size:14px word-break:break-all; word-wrap:break-all;">
+<tr>
+</tr>
+<tbody>
+  <tr>
+  <th >CHECK STAT</pre></td>
+  <td ><pre style="font-size:14px">{{form.CHECK_STAT}}</pre></td>
+   <th>IP</th>
+   <td><pre style="font-size:14px">{{form.IP}}</pre></td>
+  </tr>
+  <tr>
+    <th>SN</th> 
+    <td><pre style="font-size:14px">{{form.SN}}</pre></td>
+    <th>SN1</th>
+    <td><pre style="font-size:14px">{{form.SN1}}</pre></td>
+  </tr>
+  <tr>
+    <th>NAME</th>
+    <td><pre style="font-size:14px">{{form.NAME}}</pre></td>
+    <th>FAMILY</th> 
+    <td><pre style="font-size:14px">{{form.FIMILY}}</pre></td>
+  </tr>
+  <tr>
+    <th>TIME</th> 
+    <td><pre style="font-size:14px">{{form.TIME}}</pre></td>
+    <th>BOOT_TIME</th>
+    <td><pre style="font-size:14px">{{form.BOOT_TIME}}</pre></td>
+  </tr>
+  <tr>
+    <th>BIOS TIME</th>
+    <td><pre style="font-size:14px">{{form.BIOS_TIME}}</pre></td>
+    <th>CPU</th>
+    <td><pre style="font-size:14px">{{form.CPU}}</pre></td>
+  </tr>
+  <tr>
+    <th>MEMORY</th> 
+    <td><pre style="font-size:14px">{{form.MEMORY_INFO}}</pre></td>
+    <th>DISK</th> 
+    <td><pre style="font-size:14px">{{form.DISK_INFO}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">RAID</th>
+    <td colspan="3"><pre style="font-size:14px">{{form.RAID_INFO}}</pre></td>
+  </tr>
+  <tr>
+    <th>MAC</th>
+    <td><pre style="font-size:14px">{{form.MAC_INFO}}</pre></td>
+    <th>NETWORK</th>
+    <td><pre style="font-size:14px">{{form.NETWORK_INFO}}</pre></td>
+  </tr>
+  <tr>
+    <th>BIOS VERSION</th>
+    <td><pre style="font-size:14px">{{form.BIOS_VERSION}}</pre></td>
+    <th>BMC VERSION</th>
+    <td><pre style="font-size:14px">{{form.BMC_VERSION}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">PCIE</th>
+    <td colspan="3"><pre style="font-size:14px">{{form.PCIE_INFO}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">FRU</th>
+    <td colspan="3"><pre style="font-size:14px">{{form.FRU_INFO}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">LOCATE DISK</th>
+    <td colspan="3"><pre style="font-size:14px">{{form.LOCATE_DISK}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">LOCATE MEMORY</th>
+    <td colspan="3"><pre style="font-size:14px">{{form.LOCATE_MEMORY}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">SEL LOG</th>
+    <td colspan="3"><pre style="font-size:14px">{{all.sel}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">SMART INFO</th>
+    <td colspan="3"><pre style="font-size:14px">{{all.smart_info}}</pre></td>
+  </tr>
+</tbody>
+</table>
+</body>
+</html>
+

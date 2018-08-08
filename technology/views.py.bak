@@ -1,0 +1,128 @@
+#-*-encoding:utf-8-*-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from technology.forms import ErrorForm
+from technology.models import Error
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib import auth
+import random
+import os
+
+
+# Create your views here.
+@login_required
+def erro(req):
+    CUSTOMER = {'1':'锐捷',
+                '2':'深信服',
+                '3':'三盟',} 
+    if not req.user:
+        return HttpResponseRedirect('/login/')
+    user = req.user
+    username = req.session.get('username', '')
+    number = random.randint(100000,999999)
+    try:
+        num_exist = Error.objects.get(num=number).num 
+    except:
+        num_exist = ''
+    while number == num_exist:
+        number = random.randint(100000,999999)
+    if req.POST:
+        form = ErrorForm(req.POST, req.FILES)
+        if  form.is_valid():
+            error = Error()
+            if form.cleaned_data['discovery_phase'] == 'other':
+                error.discovery = form.cleaned_data['discovery_phase_other']
+            else:
+                error.discovery = form.cleaned_data['discovery_phase']
+            if form.cleaned_data['customer_name'] == 'other':
+                error.customer = form.cleaned_data['customer_name_other']
+            else:
+                customer = form.cleaned_data['customer_name']
+                error.customer = form.cleaned_data['customer_name']
+            if form.cleaned_data['product_name'] == 'other':
+                error.product = form.cleaned_data['product_name_other']
+            else:
+                error.product = form.cleaned_data['product_name']
+            if form.cleaned_data['project_name'] == 'other':
+                error.project  = form.cleaned_data['project_name_other']
+            else:
+                error.project  = form.cleaned_data['project_name']
+            if form.cleaned_data['discovery_phase_other']:
+                error.discovery_phase_other = form.cleaned_data['discovery_phase_other']
+            if form.cleaned_data['customer_name_other']:
+                error.customer_name_other = form.cleaned_data['customer_name_other']
+            if form.cleaned_data['product_name_other']:
+                error.product_name_other = form.cleaned_data['product_name_other']
+            if form.cleaned_data['project_name_other']:
+                error.project_name_other  = form.cleaned_data['project_name_other']
+            error.customer_name = form.cleaned_data['customer_name']
+            error.product_name = form.cleaned_data['product_name']
+            error.project_name  = form.cleaned_data['project_name']          
+            error.discovery_phase = form.cleaned_data['discovery_phase']
+            error.bug_person = form.cleaned_data['bug_person']
+            error.test_person = form.cleaned_data['test_person']
+            error.enclosure = form.cleaned_data['enclosure']
+            error.email = form.cleaned_data['email']
+            error.bug_describe = form.cleaned_data['bug_describe']
+            error.bug_level = form.cleaned_data['bug_level']
+            error.exclusion_phase = form.cleaned_data['exclusion_phase']
+            error.num = form.cleaned_data['num']
+            error.phenomenon_description = form.cleaned_data['phenomenon_description']
+            error.software_name = form.cleaned_data['software_name']
+            error.step_description = form.cleaned_data['step_description']
+            error.test_site = form.cleaned_data['test_site']
+            error.test_model = form.cleaned_data['test_model']
+            error.configuration_information = form.cleaned_data['configuration_information']
+            error.software_version = form.cleaned_data['software_version']
+            error.suggested_view = form.cleaned_data['suggested_view']
+            error.user = username
+            information = u'''bug现象描述:%s
+测试软件名称:%s
+bug产生步骤描述:%s
+测试地点:%s
+配置信息:%s
+软件版本:%s
+处理方式:%s
+建议看法:%s''' % (error.phenomenon_description, error.software_name, error.step_description, error.test_site, error.configuration_information, error.software_version, error.test_model, error.suggested_view)
+            error.bug_record = information
+            error.save()
+            return HttpResponseRedirect('/admin/technology/error/')
+    else:
+        form = ErrorForm()
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return render(req, os.path.join(PROJECT_ROOT, 'technology/templates', 'erro.html'), {'form':form,'num':number,'user':user})
+
+
+def alogin(request):
+    errors= []
+    account=None
+    password=None
+    if request.method == 'POST' :
+        if not request.POST.get('account'):
+            errors.append('Please Enter account')
+        else:
+            account = request.POST.get('account')
+        if not request.POST.get('password'):
+            errors.append('Please Enter password')
+        else:
+            password= request.POST.get('password')
+        if account is not None and password is not None :
+             user = auth.authenticate(username=account,password=password)
+             if user is not None:
+                 if user.is_active:
+                     auth.login(request,user)
+                     request.session['username'] = account
+                     return HttpResponseRedirect('/bugsystem/')
+                 else:
+                     errors.append('disabled account')
+             else :
+                  errors.append('invaild user')
+    return render_to_response('login.html', {'errors': errors})
+
+def logout(req):
+    if req.session.get('username', ''):
+        del req.session['username']
+    return HttpResponseRedirect('/login/')

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<div class="left">
+Welcome,  {{ user }} <a href="/logout">logout</a>
+</div>
+
+<head>
+<br>
+<meta http-equiv="refresh" content="240" charset=UTF-8>
+ <h4>服务器运行状态
+</br>[&nbsp;&nbsp;&nbsp;服务器连接数量:&nbsp; {{count}}&nbsp;&nbsp;&nbsp;]</br>[{{dic|upper}}] </h4>
+<h id="time1" style="color: blueviolet;" align="right"></h>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+  <style type="text/css">
+  .left {float:left}
+  body {text-align:center}
+  .right {float:right}
+//<div id="div1"></div>
+  td {color:green}
+  </style>
+ <title>
+    status
+ </title>
+</head>
+<body bgcolor="Gainsboro" >
+<table width="100%" border="1" align="center" style="font-size:13px">
+<tr>
+<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+
+</tr>
+  <thead>
+  <tr>
+    <th ><h>ID</h></th> 
+    <th ><h>IP</h></th> 
+    <th ><h>hostname</h></th> 
+    <th ><h>sn</h></th>
+    <th ><h>status</h></th>
+    <th ><h>CPU</h></th>
+    <th ><h>MEM</h></th>
+  </tr>
+  </thead>
+  <tbody >
+  {% for i in form %}
+  <tr>
+    <td >{{ i.num }}</td>
+    <td >{{ i.ip }}</td>
+    <td >{{ i.hostname }}</td>
+    <td >{{ i.sn }}</td>
+    {% if i.status == "stop" or  i.status == "erro" or  i.status == "system halted" %}
+    <td ><h3><font color="red">{{ i.status|upper }}</font></h3></td>
+    {% elif i.status == "running" %}
+    <td ><font color="blue">{{ i.status }}</font></td>
+    {% elif i.status == "reload" or i.status == "wait" or i.status == "check" %}
+    <td ><font color="green">{{ i.status }}</font></td>
+    {% else %}
+    <td ><font color="#FF0000" style="font-size:16px">{{ i.status|upper }}</font></td>
+    {% endif %}
+    <td >{{ i.cpu }}</td>
+    <td >{{ i.mem }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>

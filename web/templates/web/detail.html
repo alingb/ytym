@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+  <style type="text/css">
+  .left {float:left}
+  .body {text-align:center}
+  .right {float:right}
+  td {color:green}
+  .body span{color:red;font-size:15px}
+  .left span{color:red;font-size:15px}
+  </style>
+ <title>
+    详细信息
+ </title>
+<div>
+Welcome,  {{ user }} <a href="/logout">logout</a>
+</div>
+<h1 align="center">详细信息</h1>
+<h3 id="time1" style="color: blueviolet;" class="body"></h3>
+<!--<div class="body"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">汇总信息</button></div>-->
+</head>
+<body bgcolor="Gainsboro" >
+<table width="100%" border="1" align="center" style="font-size:14px">
+<tr>
+<div class="left"><button onclick="window.open('http://192.168.0.120/admin/web/group/')">服务器运行操作</button></div>
+<div class="right"><button onclick="window.open('http://192.168.0.120/')">运行状态</button></div>
+</tr>
+<tbody>
+  <tr>
+    <th>sn1</th> 
+    <td>form.sn1</td>
+  </tr>
+  <tr>
+    <th>sn2</th>
+    <td>form.sn2</td>
+  </tr>
+  <tr>
+    <th>status</th>
+    <td>form.status</td>
+  </tr>
+  <tr>
+    <th>name</th> 
+    <td>form.name</td>
+  </tr>
+  <tr>
+    <th>family</th> 
+    <td>form.family</td>
+  </tr>
+  <tr>
+    <th>time</th>
+    <td>form.time</td>
+  </tr>
+  <tr>
+    <th>cpu</th>
+    <td>form.cpu</td>
+  </tr>
+  <tr>
+    <th>cpu_num</th>
+    <td>form.cpu_num</td>
+  </tr>
+  <tr>
+    <th>mem_size</th>
+    <td>form.mem_size</td>
+  </tr>
+  <tr>
+    <th>mem_num</th> 
+    <td>form.mem_num</td>
+  </tr>
+  <tr>
+    <th>raid</th> 
+    <td>form.raid</td>
+  </tr>
+  <tr>
+    <th>bios</th>
+    <td>form.bios</td>
+  </tr>
+  <tr>
+    <th>bmc</th>
+    <td>form.bmc</td>
+  </tr>
+  <tr>
+    <th>disk_num</th>
+    <td>form.disk_num</td>
+  </tr>
+  <tr>
+    <th>mac</th>
+    <td>form.mac</td>
+  </tr>
+  <tr>
+    <th>disk</th>
+    <td>form.disk</td>
+  </tr>
+  <tr>
+    <th>network</th>
+    <td>form.network</td>
+  </tr>
+</tbody>
+</table>
+</body>
+</html>
+

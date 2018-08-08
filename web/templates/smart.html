@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+  <style type="text/css">
+  .left {float:left}
+  .body {text-align:center}
+  .right {float:right}
+  td {color:green;text-align:left}
+  .body span{color:red;font-size:15px}
+  .left span{color:red;font-size:15px}
+  </style>
+<div>
+Welcome,  {{ user }} <a href="/logout">logout</a>
+<h1 align="center"> smart 信息</h1>
+</div>
+<!--<h3 id="time1" style="color: blueviolet;" class="body"></h3>-->
+<!--<div class="body"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">汇总信息</button></div>-->
+<title> 详细信息 </title>
+</head>
+<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+
+<body bgcolor="Gainsboro" >
+<table width="100" border="1" align="center" style="font-size:14px word-break:break-all; word-wrap:break-all;">
+<tr>
+</tr>
+<tbody>
+  <tr>
+    <th>SN</th> 
+    <td><pre style="font-size:16px">{{form.sn}}</pre></td>
+    <th>SN1</th>
+    <td><pre style="font-size:16px">{{form.sn_1}}</pre></td>
+  </tr>
+  <tr>
+    <th>时间</th>
+    <td><pre style="font-size:16px">{{form.time}}</pre></td>
+    <th>说明</th>
+    <td><pre style="font-size:16px">{{form.explain}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">SMART信息</th>
+    <td colspan="3"><pre style="font-size:16px">{{form.smart_info}}</pre></td>
+  </tr>
+  <tr>
+    <th colspan="1">SEL日志</th>
+    <td colspan="3"><pre style="font-size:16px">{{form.sel}}</pre></td>
+  </tr>
+</tbody>
+</table>
+</body>
+</html>
+
