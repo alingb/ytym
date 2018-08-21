@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>demo</title>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+        tr.focus {
+        background-color:#eee;
+    }
+    </style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    $("#disk_choose>tbody>tr").on("click", function () {
+        $(this).parent().find("tr.focus").toggleClass("focus");//取消原先选中行
+        $(this).toggleClass("focus");//设定当前行为选中行
+    });
+    })
+function setLineNum(line){
+    if (typeof(line) !== "undefined ") {
+//只要保证那个隐藏的INPUT存在,这里就不再判断是否存在了.
+        $("#line_num").val(line.id);
+// document.getElementById("line_num").value = line.id;
+    }
+    else {
+        alert('缺少参数');
+    }
+}
+function showLineNum(){
+//只要保证那个隐藏的INPUT存在,这里也不再判断是否存在了.
+// var line_num = document.getElementById("line_num").value;
+    const line_num = $("#line_num").val();
+    alert('上次点击的是第'+line_num+'行');
+}
+</script>
+</head>
+<body>
+<table border="1" id="disk_choose">
+    <tr id="1" onclick="setLineNum(this);">
+        <td >第1行</td>
+    </tr>
+    <tr id="2" onclick="setLineNum(this);">
+        <td >第2行</td>
+    </tr>
+    <tr id="3" onclick="setLineNum(this);">
+        <td >第3行</td>
+    </tr>
+    <tr id="4" onclick="setLineNum(this);">
+        <td >第4行</td>
+    </tr>
+    <tr id="5" onclick="setLineNum(this);">
+        <td >第5行</td>
+    </tr>
+</table>
+    <input type="hidden" id="line_num" name="line_num">
+    <input type="button" id="btn_show" onclick="showLineNum();" value="show line number">
+</body>
+</html>
