@@ -92,7 +92,6 @@ def form(req):
         a = 1
         for i in form:
             b = i 
-          #  i.delete()
             b.num = a
             a += 1
             b.save()
@@ -109,50 +108,134 @@ def form(req):
         strs = ""
         for k,v in dic.items():
             strs += '--"%s"(%s)--' %(k,v) 
-       # return HttpResponse(json.dumps(stat))
         PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'status.html'), {'form':form,'count':count,'dic':strs})
 
+def form_page(request):
+    page_dic = {'page_content':None, 'page_count':None}
+
+    if request.method == 'POST':
+        page_num = request.POST.get('page', None)
+        data_count = request.POST.get('count', None)
+        print(page_num,data_count)
+        # pagesplit_obj=pagesplit.Pager(page_num)
+        page_end = int(page_num) * int(data_count)
+        page_start = page_end - int(data_count)
+        query_obj = Host.objects.all()[page_start:page_end]
+        page_count = Host.objects.count()
+        page_cont_str=''
+        for i in query_obj:
+            page_cont_str+='''
+            <tr>
+            <td>%s</td>
+            <td>%s</td>
+            <td>%s</td>
+            <td><a href="/res_query_check/%s"></a></td> </tr>
+            '''%(i.id, i.task_name, i.task_user, i.id)
+        page_dic['page_content']=page_cont_str
+        page_dic['page_count']=page_count
+        return  HttpResponse(json.dumps(page_dic))
+    elif request.method=='GET':
+        page_count = Host.objects.count()
+        x,y=divmod(page_count,12)
+        if y:
+            page_num=x+1
+        else:
+            page_num=x
+        return render(request,'page.html',{'pagecount':page_num})
+
 def change_bios_bmc(req):
+    def sshConn(ip, cmd):
+        import paramiko
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        try:
+            ssh.connect(ip,22,'root','admin123',timeout=1)        
+        except:
+            return False
+        stdin, stdout, stderr = ssh.exec_command(cmd)
+        data = stdout.read()
+        ssh.close()
+        return data
+        
+
+    def dataDelete():
+        obj_ip = ChangeBiosBmc.objects.all().values('ip')
+        for obj in obj_ip:
+            key, ip = obj.items()[0]
+            cmd = 'ps aux | grep "ls" | wc -l'
+            num = sshConn(ip, cmd)
+            if num < 5:
+                ChangeBiosBmc.objects.filter(ip=ip).delete()
+            
+
+    def dataCreate(sn, sn_1):
+        host_msg = Host.objects.filter(sn=sn,sn_1=sn_1).values("sn", "sn_1", 
+                                                               "ip", "bios", 
+                                                               "bmc", "name", 
+                                                               "family", "fru")[0]
+        try:
+            ChangeBiosBmc.objects.get(sn=sn,sn_1=sn_1)
+        except:
+            ChangeBiosBmc.objects.create(**host_msg)
+
     if req.POST:
-        info = req.POST
-        date = req.POST.getlist('msg', '')
-        date = date[0]
-        erro_msg = []
-        stat = []
-        for k,v in info.items():
-            if 'sn' in k:
-                sn = v
-            if 'ip' in k:
-                ip = v
-            if 'sn_1' in k:
-                sn_1 = v
-            try:
-                ssh = paramiko.SSHClient()
-                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                ssh.connect(ip,22,'root','admin123',timeout=1)
-                cmd = 'ps aux | grep cpu | grep -v grep | wc -l'
-                stdin, stdout, stderr = ssh.exec_command(cmd)
-                data = stdout.read()
-                if data:
+        data = req.POST.getlist('msg', '')
+        bmc = req.POST.get('bmcversion')
+        bios = req.POST.get('biosversion')
+        filedata = req.FILES.get('filename')
+        erro_msg, stat = [], []
+        dataDelete()
+        for i in data:
+            msg_list = i.split(',')
+            sn = msg_list[0]
+            sn_1 = msg_list[1]
+            ip = msg_list[2]
+            dataCreate(sn, sn_1)
+            cmd = 'ps aux | egrep "cpu" | grep -v grep | wc -l'
+            data = sshConn(ip, cmd)
+            if data:
+                if data > 1:
                     stat.append('The program is running')
-                    
                 else:
                     cmd = 'ls'
-                    stdin, stdout, stderr = ssh.exec_command(cmd)
-            except:
+                    sshConn(ip, cmd)
+            else:
                 erro_msg.append('conn erro')
-        msg = ChangeBiosBmc.objects.all()
-        PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'change_bios_bmc.html'),{'form':msg, 'erro':date, 'stat':stat})
-    else:
-        change_msg = ChangeBiosBmc.objects.all().values_list('sn',"sn_1")
-        for sn,sn_1 in change_msg:
-            host_msg = Host.objects.filter(sn=sn,sn_1=sn_1).values("ip", "bios", "bmc", "name", "family", "fru")[0]
-            ChangeBiosBmc.objects.filter(sn=sn,sn_1=sn_1).update(**host_msg)
-        msg = ChangeBiosBmc.objects.all()
-        PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'change_bios_bmc.html'),{'form':msg})
+    return HttpResponseRedirect('/change_status')
+
+
+def change_status(req):
+    import paramiko
+    change_msg = ChangeBiosBmc.objects.all().values_list('sn',"sn_1")
+    for sn,sn_1 in change_msg:
+        host_msg = Host.objects.filter(sn=sn,sn_1=sn_1).values("ip", "bios", "bmc", "name", "family", "fru")[0]
+        ChangeBiosBmc.objects.filter(sn=sn,sn_1=sn_1).update(**host_msg)
+    msgs = ChangeBiosBmc.objects.all()
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    for msg in msgs:
+        conn_ip = msg.ip
+        try:
+            ssh.connect(conn_ip,22,'root','admin123',timeout=1)
+        except:
+            msg.stat = 'error'
+            msg.save()
+            continue
+        stdin, stdout, stderr = ssh.exec_command('ps aux | grep ls | wc -l')
+        number = int(stdout.read())
+        if number > 10:
+            msg.stat = 'running...'
+            msg.save()
+            continue
+        else:
+            msg.stat = 'complete'
+            msg.save()
+        ssh.close()
+    form = ChangeBiosBmc.objects.all()
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'test.html'),{'form':form})
+
 
 def index(req):
     PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -180,6 +263,35 @@ def smart(req):
 #        return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'smart.html'), {'form':form})
         return HttpResponse(form)
 
+def product(req, productName):
+    prot = Product.objects.get(name=productName)
+    orders = prot.orders.all()
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'product.html'), {'name':productName, 'orders':orders})
+
+def productCollect(req):
+    from django.core.exceptions import MultipleObjectsReturned
+    msg = []
+    try:
+        if req.POST:
+            info = json.loads(req.body)
+            prot = Product.objects.get_or_create(name=info["name"])[0]
+	    for sn in info["sn_list"]:
+                try:
+ 	            host = Host.objects.get(sn=sn)
+        	    prot.orders.add(host)
+                except:
+                    msg.append("sn:{} no foud\n".format(sn))
+                    try:
+                        host = Host.objects.get(sn_1=sn)
+        	        prot.orders.add(host)
+                    except:
+                        msg.append("sn_1:{} no foud\n".format(sn))
+    except Exception as e:
+    	return HttpResponse("no")
+    return HttpResponse(msg)
+
+
 def usename(req, table, id, mang):
     if table == 'Host':
         form = Host.objects.get(id=id)
@@ -195,37 +307,35 @@ def usename(req, table, id, mang):
             ALL_LIST.append(re_info[0])
     for i in xrange(len(ALL_LIST)):
         try:
-            info = message.split(ALL_LIST[i+1])[0]
+            info = message.split(ALL_LIST[i+1])[0].strip()
             split_info = ALL_LIST[i] +  ':'
             try:
-                data = info.split(split_info)[1]
+                data = info.split(split_info)[1].strip()
             except:
                 data = ''
-            if ALL_LIST[i] == 'NAME' or ALL_LIST[i] == 'FIMILY':
-                dic[ALL_LIST[i].replace(' ', '_')] = '\t' + data.strip()
-            else:
-                dic[ALL_LIST[i].replace(' ', '_')] = data
+           # if ALL_LIST[i] == 'NAME' or ALL_LIST[i] == 'FIMILY':
+           #     dic[ALL_LIST[i].replace(' ', '_')] = '' + data.strip()
+           # else:
+            dic[ALL_LIST[i].replace(' ', '_')] = data.strip()
         except:
             info = message.split(ALL_LIST[i])[0]
             dic[ALL_LIST[i].replace(' ', '_')] = info.split(':')[1]
     PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'detail.html'), {'form':dic,'all':form})
+    if mang:
+        return render(req, os.path.join(PROJECT_ROOT, 'web/templates', '{}.html'.format(mang)), {'form':dic,'all':form})
+    else:
+        return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'detail.html'), {'form':dic,'all':form})
 
 
 def checkStat(req):
     if req.POST: 
         info = req.POST
         if info['check'] == 'run':
-         #   with open('/data/ytym/web/run.log','a') as f:
-         #       f.write('run')
-         #   return HttpResponseRedirect("/technology/web/host/")
             return HttpResponse('run')
         if info['check'] == 'stop':
-        #    return HttpResponseRedirect("/technology/web/host/")
             return HttpResponse('stop')
     else:
         return HttpResponse('else')
-#        return HttpResponseRedirect("/technology/web/host/")
 
 def smartid(req, id):
     form = Smart.objects.get(id=id)
@@ -258,6 +368,17 @@ def smartid(req, id):
 #        except:
 #            info = message.split(ALL_LIST[i])[0]
 #            dic[ALL_LIST[i].replace(' ', '_')] = info.split(':')[1]
+#                data = info.split(split_info)[1]
+#            except:
+#                data = ''
+#            if ALL_LIST[i] == 'NAME' or ALL_LIST[i] == 'FIMILY':
+#                dic[ALL_LIST[i].replace(' ', '_')] = '\t' + data.strip()
+#                dic[ALL_LIST[i].replace(' ', '_')] = '\t' + data.strip()
+#            else:
+#                dic[ALL_LIST[i].replace(' ', '_')] = data
+#        except:
+#            info = message.split(ALL_LIST[i])[0]
+#            dic[ALL_LIST[i].replace(' ', '_')] = info.split(':')[1]
 #    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #    return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'change_bios_bmc.html'),  {'form':dic,'all':form})
 
@@ -270,7 +391,6 @@ def test(req):
         power_time = req.POST.get('power')
         time = int(power_time) * 60
         cmd = 'nohup shutdown -c --no-wall && shutdown -h +%s --no-wall &>/root/shutdown.time &' % time
-        #cmd = 'sleep 1'
         for k, v in post_info.items():
             ret = {}
             if 'ip' in k:
@@ -298,4 +418,3 @@ def test(req):
     finally:
         PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         return render(req, os.path.join(PROJECT_ROOT, 'web/templates', 'run.html'), {'ret':msg,'rt':rt})
-

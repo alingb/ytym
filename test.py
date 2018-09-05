@@ -52,12 +52,12 @@
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 #
-# DB_CONNECT_STRING = 'mysql+pymysql://trusme:6286280300@192.168.1.57/cmdb?charset=utf8'
+# DB_CONNECT_STRING = 'mysql+pymysql://trusme:6286280300@192.168.1.57/command?charset=utf8'
 # engine = create_engine(DB_CONNECT_STRING, echo=False)
 # DB_Session = sessionmaker(bind=engine)
 # session = DB_Session()
 # start_time = time.time()
-# print(session.execute('select count(1) from cmdb.web_host').fetchall())
+# print(session.execute('select count(1) from command.web_host').fetchall())
 # end_time = time.time()
 # print(end_time - start_time)
 # session.close()

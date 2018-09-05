@@ -37,6 +37,11 @@
     text-align:center;
    padding:5px;	 	 
   }
+    button {
+        font-size: 15px;
+        background: #007aff;
+        border-radius: 10px;
+    }
 </style>
 
 
@@ -45,19 +50,19 @@ Welcome,  {{ user }} <a href="/logout">logout</a>
 <!--<h1 align="center"> 详细信息</h1>-->
 </div>
 <!--<h3 id="time1" style="color: blueviolet;" class="body"></h3>-->
-<!--<div class="body"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">汇总信息</button></div>-->
+<!--<div class="body"><button onclick="window.open('/technology/technology/error/')">汇总信息</button></div>-->
 </head>
-<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+<div class="left"><button onclick="window.open('/')">index</button></div>
+<div class="left"><button onclick="window.open('/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('/technology/web/hostcheck/')">近期服务器信息</button></div>
 <body bgcolor="Gainsboro" >
   <div id="header">
    <h1>详细信息<h1>
   </div>
   <div id="nav">
-   <a href="/test" ><img src="http://192.168.1.57/file/all.jpg"  width="80" height="50"/></a>
+   <a href="/test" ><img src="/file/all.jpg"  width="80" height="50"/></a>
    <h1>内存</h1>
    <h1>硬盘</h1>
    <h1>PCI-E</h1>
@@ -81,7 +86,7 @@ Welcome,  {{ user }} <a href="/logout">logout</a>
     <th>NAME</th>
     <td><pre style="font-size:14px">{{form.NAME}}</pre></td>
     <th>FAMILY</th> 
-    <td><pre style="font-size:14px">{{form.FIMILY}}</pre></td>
+    <td><pre style="font-size:14px">{{form.FAMILY}}</pre></td>
   </tr>
   <tr>
     <th>TIME</th> 

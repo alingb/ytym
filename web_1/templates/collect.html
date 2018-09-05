@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="refresh" content="3">
+ <h1> 服务器配置信息 </h1>
+<p id="time1" style="color: blueviolet;" align="right"></p>
+<script>
+    function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("time1").innerHTML = c+"&nbsp"+b;
+        }
+    setInterval(function() {mytime()},10);
+</script>
+  <style type="text/css">
+  .left {float:left}
+  body {text-align:center}
+  .right {float:right}
+//<div id="div1"></div>
+  td {color:green}
+  </style>
+ <title>
+    服务器配置信息
+ </title>
+</head>
+<body bgcolor="Gainsboro">
+<table width="100%" border="1" align="center" style="font-size:14px">
+<tr>
+<div class="left"><button onclick="window.open('http://192.168.0.120/admin/web/group/')">服务器运行操作</button></div>
+<div class="right"><button onclick="window.open('http://192.168.0.120/')">运行状态</button></div>
+</tr>
+  <thead>
+  <tr>
+    <th>sn1</th> 
+    <th>sn2</th>
+    <th>status</th>
+    <th>name</th> 
+    <th>family</th> 
+    <th>time</th>
+    <th>cpu</th>
+    <th>cpu_num</th>
+    <th>mem_size</th>
+    <th>mem_num</th> 
+    <th>raid</th> 
+    <th>bios</th>
+    <th>bmc</th>
+    <th>disk_num</th>
+    <th>mac</th>
+    <th>disk</th>
+    <th>network</th>
+  </tr>
+  </thead>
+  <tbody >
+  {% for i in form %}
+  <tr>
+    <td>{{ i.sn }}</td>
+    <td>{{ i.sn_1 }}</td>
+    <td>{{ i.status }}</td>
+    <td>{{ i.name }}</td>
+    <td>{{ i.family }}</td>
+    <td>{{ i.time }}</td>
+    <td>{{ i.cpu }}</td>
+    <td>{{ i.c_nu }}</td>
+    <td>{{ i.mem_size }}</td>
+    <td>{{ i.m_nu }}</td>
+    <td>{{ i.raid }}</td>
+    <td>{{ i.bios }}</td>
+    <td>{{ i.bmc }}</td>
+    <td>{{ i.disk_num }}</td>
+    <td>{{ i.mac_addr }}</td>
+    <td>{{ i.disk }}</td>
+    <td>{{ i.network }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>

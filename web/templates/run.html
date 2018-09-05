@@ -4,6 +4,11 @@
 <meta charset=UTF-8>
 <!--http-equiv="refresh" content="240" charset=UTF-8--!>
 <style type="text/css">
+    button {
+        font-size: 15px;
+        background: #007aff;
+        border-radius: 10px;
+    }
   .left {float:left;}
   .body {text-align:center}
   .right {float:right;}
@@ -60,11 +65,11 @@ function enable()
 Welcome,  {{ user }} <a href="/logout">logout</a>
 </div>
 </head>
-<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+<div class="left"><button onclick="window.open('/')">index</button></div>
+<div class="left"><button onclick="window.open('/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('/technology/web/hostcheck/')">近期服务器信息</button></div>
 
   <div id="header">
    <h1>执行状况<h1>
@@ -84,7 +89,7 @@ Welcome,  {{ user }} <a href="/logout">logout</a>
   </tbody>
 </table>
   </br>
-  <div class="body"><input type="button" value="确定" onclick="javascrtpt:window.location.href='http://192.168.1.57/technology/web/host/'"></div>
+  <div class="body"><input type="button" value="确定" onclick="javascrtpt:window.location.href='/technology/web/host/'"></div>
 </body>
 </html>
 

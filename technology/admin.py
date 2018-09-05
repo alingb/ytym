@@ -17,6 +17,23 @@ import MySQLdb
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+
+USER = {'daipeibin':u'戴沛斌',
+        'huangjiaqi':u'黄嘉琪',
+        'jinanning':u'金安宁',
+        'laiwenlong':u'赖文龙',
+        'lichao':u'李超',
+        'liming':u'李铭',
+        'maimaotao':u'麦茂涛',
+        'wangqiang':u'王强',
+        'xieliye':u'谢立业',
+        'zhengcongke':u'郑淙珂',
+        'zhongyangchun':u'仲扬春',
+        'linliubin':u'林柳彬',
+        'lingbing':u'凌兵',}
+EXCLUSION = {'1':'处理中',
+                     '2':'已完成'}
+
 # Register your models here.
 def save_errors(self, request, queryset):
   def export(host,user,password,dbname,table_name,outputpath,num):
@@ -150,10 +167,9 @@ class ErrorAdmin(admin.ModelAdmin):
 
     address_report.short_description = "Address"
 
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user.username
-        obj.save()
-#    readonly_fields = ("user",'num', 'product', 'project', 'bug_person', 'test_site', 'bug_level', 'discovery', 'customer', 'sn', 'bug_describe', 'test_model',)
+#    def save_model(self, request, obj, form, change):
+#        obj.user = request.user.username
+#        obj.save()
     
     def changelist_view(self, request, extra_context=None):
         user = request.user
@@ -164,16 +180,16 @@ class ErrorAdmin(admin.ModelAdmin):
         if user.is_superuser:
             self.readonly_fields = ("user",'num',)
         elif group == 'technology':
-            self.fields = ('num',
-                           ('product', 'project'),
-                           ('bug_person', 'test_site'),
-                           ('bug_level', 'exclusion_phase'),
-                           ('discovery', 'customer'),
-                           ('enclosure', 'sn'),
-                           'bug_describe',
-                           'bug_record',
-                           'test_model',
-                           'record_update')
+            self.fields = ('num', 
+                          ('product','project'),
+                          ('bug_person','test_site'),
+                          ('bug_level','exclusion_phase'),
+                          ('discovery','customer'), 
+                          ('enclosure', 'sn'), 
+                          'bug_describe', 
+                          'bug_record', 
+                          'test_model', 
+                          'record_update')
             self.readonly_fields = ("user",
                                     'num', 
                                     'product', 
@@ -186,11 +202,11 @@ class ErrorAdmin(admin.ModelAdmin):
                                     'sn', 
                                     'bug_describe',)
         else:
-            self.fields = ('num',
-                           ('product', 'project'),
-                           ('bug_person', 'test_site'),
-                           ('bug_level', 'exclusion_phase'),
-                           ('discovery', 'customer'),
+            self.fields = ('num', 
+                           ('product','project'),
+                           ('bug_person','test_site'),
+                           ('bug_level','exclusion_phase'),
+                           ('discovery','customer'), 
                            ('enclosure', 'sn'), 
                            'bug_describe', 
                            'test_model', 
@@ -212,21 +228,21 @@ class ErrorAdmin(admin.ModelAdmin):
         return super(ErrorAdmin, self).changelist_view(request, extra_context=None)
 
     def save_model(self, request, obj, form, change):
-        USER = {'daipeibin': u'戴沛斌',
-                'huangjiaqi': u'黄嘉琪',
-                'jinanning': u'金安宁',
-                'laiwenlong': u'赖文龙',
-                'lichao': u'李超',
-                'liming': u'李铭',
-                'maimaotao': u'麦茂涛',
-                'wangqiang': u'王强',
-                'xieliye': u'谢立业',
-                'zhengcongke': u'郑淙珂',
-                'zhongyangchun': u'仲扬春',
-                'linliubin': u'林柳彬',
-                'lingbing': u'凌兵', }
-        EXCLUSION = {'1': '处理中',
-                     '2': '已完成'}
+#        USER = {'daipeibin':u'戴沛斌',
+#                'huangjiaqi':u'黄嘉琪',
+#                'jinanning':u'金安宁',
+#                'laiwenlong':u'赖文龙',
+#                'lichao':u'李超',
+#                'liming':u'李铭',
+#                'maimaotao':u'麦茂涛',
+#                'wangqiang':u'王强',
+#                'xieliye':u'谢立业',
+#                'zhengcongke':u'郑淙珂',
+#                'zhongyangchun':u'仲扬春',
+#                'linliubin':u'林柳彬',
+#                'lingbing':u'凌兵',}
+#        EXCLUSION = {'1':'处理中',
+#                     '2':'已完成'}
         if change:
             obj_old = self.model.objects.get(pk=obj.pk)
         else:
@@ -240,7 +256,7 @@ class ErrorAdmin(admin.ModelAdmin):
             obj.user = request.user.username
             try:
                 obj.user = USER[obj.user]
-            except Exception, e:
+            except:
                 pass
             obj.time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
             obj.exclusion = EXCLUSION[obj.exclusion_phase]
@@ -265,9 +281,9 @@ class ErrorAdmin(admin.ModelAdmin):
                 obj.test_model = obj_old.test_model
                 obj.bug_record = '%s\n====================\n%s\n(%s,%s)'% (obj_old.bug_record, obj.record_update, obj.user, datetime.datetime.now().strftime('%y-%m-%d %H:%M:%S'))
                 obj.record_update = ''
-            else:
-                obj.bug_record = obj_old.bug_record
-                obj.test_model = obj_old.test_model
+           # else:
+           #     obj.bug_record = obj_old.bug_record
+           #     obj.test_model = obj_old.test_model
             obj.save()
 
 #class SmartAdmin(admin.ModelAdmin):
@@ -279,5 +295,154 @@ class ErrorAdmin(admin.ModelAdmin):
 #    search_fields = ('sn', 'sn_1',  )
 #    list_filter = ('sn', 'sn_1', )
 #
+class FaeErrorAdmin(admin.ModelAdmin):
+    list_display = [
+                    'number',
+                    'num',
+                    'product',
+                   # 'exclusion_phase',
+                    'bug_describe',
+                    #'phenomenon_description',
+                    'submission_time',
+                    'time',
+                    'customer',
+                    'user',
+                    'enclosure',
+                    'status',
+                    ]
+    search_fields = ('num',
+                     'sn',
+                     'product',
+                     'exclusion_phase',
+                     'customer',
+                     'user',
+                     'status',)
+    list_filter = ('product',
+                   'exclusion_phase',
+                   'customer',
+                   'user',
+                   'status',
+                   'submission_time',)
+    date_hierarchy = 'submission_time'
+    list_display_links = ('num',)
+    list_per_page = 30
+    readonly_fields = ('address_report',)
+    actions_on_top = True
+
+    def address_report(self, obj):
+        return format_html_join(
+            mark_safe('<br/>'),
+            '{}',
+            ((line,) for line in obj.resolvent.split('\n')),
+        ) or mark_safe("<span class='errors'>I can't determine this address.</span>")
+
+    address_report.short_description = "Address"
+
+#    def save_model(self, request, obj, form, change):
+#        obj.user = request.user.username
+#        obj.save()
+
+    def changelist_view(self, request, extra_context=None):
+        user = request.user
+        if user.groups.values():
+            group = user.groups.values()[0]['name']
+        else:
+            group = ''
+        if user.is_superuser:
+            self.readonly_fields = ("user",'num',)
+        elif group == 'technology':
+            self.fields = ('num',
+                          ('product'),
+                          ('exclusion_phase'),
+                          ('customer'),
+                          ('enclosure', 'sn'),
+                          'bug_describe',
+                          'bug_record',
+                          #'resolvent',
+                          'record_update')
+            self.readonly_fields = ("user",
+                                    'num',
+                                    'product',
+                                    'customer',
+                                    'sn',
+                                    'bug_describe',)
+        else:
+            self.fields = ('num',
+                          ('product'),
+                          ('exclusion_phase'),
+                          ('customer'),
+                          ('enclosure', 'sn'),
+                          'bug_record',
+                          'bug_describe',
+                          #'resolvent',
+                          'record_update')
+            self.readonly_fields = ("user",
+                                    'num',
+                                    'product',
+                                    'customer',
+                                    'sn',
+                                    'bug_describe',)
+        return super(FaeErrorAdmin, self).changelist_view(request, extra_context=None)
+
+    def save_model(self, request, obj, form, change):
+#        USER = {'daipeibin': u'戴沛斌',
+#                'huangjiaqi': u'黄嘉琪',
+#                'jinanning': u'金安宁',
+#                'laiwenlong': u'赖文龙',
+#                'lichao': u'李超',
+#                'liming': u'李铭',
+#                'maimaotao': u'麦茂涛',
+#                'wangqiang': u'王强',
+#                'xieliye': u'谢立业',
+#                'zhengcongke': u'郑淙珂',
+#                'zhongyangchun': u'仲扬春',
+#                'linliubin': u'林柳彬',
+#                'lingbing': u'凌兵', }
+#        EXCLUSION = {'1': '处理中',
+#                     '2': '已完成'}
+        if change:
+            obj_old = self.model.objects.get(pk=obj.pk)
+        else:
+            obj_old = None
+        obj.user = request.user
+        if obj.user.groups.values():
+            group = obj.user.groups.values()[0]['name']
+        else:
+            group = ''
+        if request.user.is_superuser:
+            obj.user = request.user.username
+            try:
+                obj.user = USER[obj.user]
+            except:
+                pass
+            obj.time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            obj.exclusion = EXCLUSION[obj.exclusion_phase]
+            if obj.exclusion_phase == '1':
+                obj.status = False
+            elif obj.exclusion_phase == '2':
+                obj.status = True
+            obj.save()
+        if group == 'technology':
+            obj.user = request.user.username
+            try:
+                obj.user = USER[obj.user]
+            except:
+                pass
+            obj.time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+            obj.exclusion = EXCLUSION[obj.exclusion_phase]
+            if obj.exclusion_phase == '1':
+                obj.status = False
+            elif obj.exclusion_phase == '2':
+                obj.status = True
+            if obj.record_update:
+                obj.resolvent = obj_old.resolvent
+                obj.bug_record = '%s\n====================\n%s\n(%s,%s)'% (obj_old.bug_record, obj.record_update, obj.user, datetime.datetime.now().strftime('%y-%m-%d %H:%M:%S'))
+                obj.record_update = ''
+           # else:
+           #     obj.bug_record = obj_old.bug_record
+           #     obj.resolvent = obj_old.resolvent
+            obj.save() 
+
 admin.site.register(Error,ErrorAdmin)
+admin.site.register(FaeError,FaeErrorAdmin)
 #admin.site.register(Smart,SmartAdmin)

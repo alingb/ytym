@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<!-- <meta http-equiv="refresh" content="240" charset=UTF-8 /> --!>
 <style type="text/css">
   .left {float:left;}
   .body {text-align:center}
@@ -56,21 +56,17 @@
 Welcome,  {{ user }} <a href="/logout">logout</a>
 </div>
 </head>
-<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
-
   <div id="header">
    <h1>服务器客制化设定<h1>
   </div>
 <body bgcolor="Gainsboro" >
 <div id="section"> <h1>设备信息</h1></div>
+{% block action %}
 <form action="/change_bios_bmc/"  name=form1 method="post" enctype="application/json">
+{% endblock %}
 <table  width="85%" border="1" align="center" style="font-size:14px word-break:break-all; word-wrap:break-all;"> 
   <tbody>
-  {% for f in form %}
+ <!-- {% for f in form %}
    <tr>
    <th>ID</th>
    <td><input type="text" size="6" name="id" value="{{ f.id }}" readonly></td>
@@ -87,16 +83,33 @@ Welcome,  {{ user }} <a href="/logout">logout</a>
    <th>BMC</th>
    <td><input type="text" name="bmc" size="8" value="{{ f.bmc }}" readonly></td>
    <input type="text"   name="ip" value="{{ f.ip }}" hidden>
-   <input type="text" name="msg" value="{{f.sn}},{{f.sn_1}},{{f.ip}},{{f.bios}},{{f.bmc}},{{f.name}},{{f.family}},{{f.fru}}" hidden>
    </div>
    </tr>
-  {% endfor %}
-  {% for i in erro %}
-    {{ i }}
-  {% endfor %}}
+  {% endfor %}--!>
+<thead>
+<tr>
+<th>ID</th><th>SN</th><th>SN1</th><th>NAME</th><th>FAMILY</th><th>BIOS</th><th>BMC</th><th>STAT</>
+</tr>
+</thead>
+{% for f in form %}
+<tr>
+<td>{{ f.id }}</td>
+<td>{{ f.sn }}</td>
+<td>{{ f.sn_1 }}</td>
+<td>{{ f.name }}</td>
+<td>{{ f.family }}</td>
+<td>{{ f.bios }}</td>
+<td>{{ f.bmc }}</td>
+<td>{{ f.stat }}</td>
+   {% block msg%}
+   <input type="text" name="msg" value="{{f.sn}},{{f.sn_1}},{{f.ip}},{{f.bios}},{{f.bmc}},{{f.name}},{{f.family}},{{f.fru}}" hidden>
+   {% endblock %}
+</tr>
+{% endfor %}
   </tbody>
 </table>
  <div class="test">
+ {% block option%}
   </br>
   更新内容:</br>
   <h>bios:</h>
@@ -115,9 +128,12 @@ Welcome,  {{ user }} <a href="/logout">logout</a>
   </select></br>
   <h>fru:</h>
   <input type="checkbox" id="fru" onclick="agree();" /></br>
-  <input type=file id="filename" hidden/>
+  <input type=file id="filename" name="filename" hidden/>
 </form>
-  <p><input type="submit" style="font-size:25px" value="执行" onclick="javascript:{this.disabled=true;document.form1.submit();this.value='客制化中……';}" /></p>
+  {% endblock %}
+  {% block submit%}
+  <p><input type="submit" style="font-size:25px" value="执行" onclick="javascript:{this.disabled=true;document.form1.submit();this.value='load...';}" /></p>
+  {% endblock %}
  </div>
 </body>
 

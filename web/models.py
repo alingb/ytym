@@ -36,6 +36,16 @@ class Host(models.Model):
     def __unicode__(self):
         return self.sn
 
+
+
+#class Product(models.Model):
+#    name = models.CharField(max_length=250)
+#    orders = models.ManyToManyField(Host)
+#    def __unicode__(self):
+#        return self.name
+    
+
+
 class HostCheck(models.Model):
     id = models.AutoField(primary_key=True)
     sn = models.CharField(max_length=250)
@@ -69,11 +79,13 @@ class HostCheck(models.Model):
     def __unicode__(self):
         return self.sn
 
+
+
 KIND_CHOICES = (
-    ('run', 'run'),
-    ('stop', 'stop'),
-    ('poweroff', 'poweroff'),
-    ('bmcLogClear', 'bmcLogClear'),
+    ('run','run'),
+    ('stop','stop'),
+    ('poweroff','poweroff'),
+    ('bmcLogClear','bmcLogClear'),
 )
 class Stat(models.Model):
     ip = models.GenericIPAddressField()
@@ -119,3 +131,4 @@ class ChangeBiosBmc(models.Model):
     family = models.CharField('family', max_length=250)
     #number = models.IntegerField('number')
     fru = models.CharField('fru_info', max_length=250, blank=True)
+    stat = models.CharField('status', max_length=250, blank=True)

@@ -41,6 +41,11 @@
     text-align:center;
    padding:5px;	 	 
   }
+    button {
+        font-size: 15px;
+        background: #007aff;
+        border-radius: 10px;
+    }
 </style>
 <script type="text/javascript">
 function disable()
@@ -60,11 +65,11 @@ function enable()
 Welcome,  {{ user }} <a href="/logout">logout</a>
 </div>
 </head>
-<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
-<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
-<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+<div class="left"><button onclick="window.open('/')">index</button></div>
+<div class="left"><button onclick="window.open('/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('/technology/web/hostcheck/')">近期服务器信息</button></div>
 
   <div id="header">
    <h1>老化设备关机时间设定<h1>

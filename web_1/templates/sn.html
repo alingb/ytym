@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=UTF-8>
+<!--http-equiv="refresh" content="240" charset=UTF-8--!>
+<style type="text/css">
+  .left {float:left;}
+  .body {text-align:center}
+  .right {float:right;}
+  .test {float:right;width:750px;}
+  th {color:green;text-align:left}
+  .body span{color:red;font-size:15px}
+  .left span{color:red;font-size:15px}
+  #header {
+    background-color:blue;
+    color:white;
+    text-align:center;
+    padding:5px;
+  }
+  #nav {
+    line-height:30px;
+    background-color:green;
+    height:600px;
+    width:100px;
+    float:left;
+    padding:5px;	      
+  }
+  #section {
+    width:730px;
+    float:right;
+    padding:5px;	 	 
+  }
+  #left {
+    width:700px;
+    float:right;
+  }
+  #footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;	 	 
+  }
+</style>
+<script type="text/javascript">
+function disable()
+  {
+  document.getElementById("filename").disabled=true
+  document.getElementById("filename").hidden=true
+  }
+function enable()
+  {
+  document.getElementById("filename").disabled=false
+  document.getElementById("filename").hidden=false
+  }
+</script>
+
+
+<div>
+Welcome,  {{ user }} <a href="/logout">logout</a>
+</div>
+</head>
+<div class="left"><button onclick="window.open('http://192.168.1.57/')">index</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/host/')">老化测试系统</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/bugsystem/')">Debug提交</button></div>
+<div class="right"><button onclick="window.open('http://192.168.1.57/technology/technology/error/')">Debug系统</button></div>
+<div class="left"><button onclick="window.open('http://192.168.1.57/technology/web/hostcheck/')">近期服务器信息</button></div>
+
+  <div id="header">
+   <h1>老化设备关机时间设定<h1>
+  </div>
+<body bgcolor="Gainsboro" >
+<div id="section"> <h1>设备信息</h1></div>
+<form action="/test/"  name=form1 method="post" enctype="multipart/form-data">
+<table  width="85%" border="1" align="center" style="font-size:14px word-break:break-all; word-wrap:break-all;"> 
+  <tbody>
+  {% for f in form %}
+   <tr>
+   <th>ID</th>
+   <td><input type="text" size="6" name="id{{ f.id }}" value="{{ f.id }}" readonly></td>
+   <th>SN</th>
+   <td><input type="text" name="sn{{ f.id }}" value="{{ f.sn }}" readonly></td>
+   <th>SN1</th>
+   <td><input type="text" name="sn1{{ f.id }}" value="{{ f.sn_1 }}" readonly></td>
+   <th>NAME</th>
+   <td><input type="text" name="name{{ f.id }}" value="{{ f.name }}" readonly></td>
+   <th>FAMILY</th>
+   <td><input type="text" name="family{{ f.id }}" value="{{ f.family }}" readonly></td>
+   <th>BIOS</th>
+   <td><input type="text" size="8" name="bios{{ f.id }}" value="{{ f.bios }}" readonly></td>
+   <th>BMC</th>
+   <td><input type="text" size="8" name="bmc{{ f.id }}" value="{{ f.bmc }}" readonly></td>
+   <input type="text"  name="ip{{ f.id }}" value="{{ f.ip }}" hidden>
+   </div>
+   </tr>
+  {% endfor %}
+  </tbody>
+</table>
+ <div class="test">
+  </br>
+  关机时间:</br>
+  <label><input name="power" type="radio" value="1" />1H</label>
+  <label><input name="power" type="radio" value="4" />4H</label>
+  <label><input name="power" type="radio" value="12" checked/>12H</label>
+  <label><input name="power" type="radio" value="24" />24H</label>
+  <label><input name="power" type="radio" value="48" />48H</label>
+  <label><input name="power" type="radio" value="72" />72H</label>
+</form>
+  <p><input type="submit" style="font-size:25px" value="执行" onclick="javascript:{this.disabled=true;document.form1.submit();this.value='执行中……';}" /></p>
+ </div>
+</body>
+</html>
+

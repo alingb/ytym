@@ -112,10 +112,38 @@ class Error(models.Model):
     number = models.CharField('编号', max_length=50, blank=True)
     sn = models.CharField('产品sn', max_length=250)
     class Meta:
-        verbose_name = u'fault'
-        verbose_name_plural = u'bugsystem'
+        verbose_name = u'product_fault'
+        verbose_name_plural = u'product_bugsystem'
 #    def __unicode__(self):
 #        return self.num
+
+class FaeError(models.Model):
+    num = models.IntegerField('bug编号', blank=True)
+    product = models.CharField('产品名称',max_length=500 ,blank=True)
+    product_name = models.CharField('产品名称', choices=PRODUCT_CHOICES, max_length=500)
+    product_name_other = models.CharField('其他产品名称', max_length=500, blank=True, )
+    customer_name = models.CharField('客户名称', choices=CUSTOMER_CHOICES, max_length=500)
+    customer_name_other = models.CharField('其他客户名称', max_length=500, blank=True)
+    customer = models.CharField('客户名称', max_length=500, blank=True)
+    exclusion_phase = models.CharField('问题状态', choices=EXCLUSION_CHOICES, max_length=500)
+    exclusion = models.CharField('问题状态', max_length=500, blank=True)
+    sn = models.CharField('产品sn', max_length=250)
+    enclosure = models.FileField('附件上传', blank=True)
+    phenomenon_description = models.CharField('bug现象详细描述', max_length=500)
+    configuration_information = models.CharField('配置信息', max_length=500)
+    resolvent = models.TextField('解决方法')
+    bug_record = models.TextField('BUG记录', blank=True)
+    submission_time = models.DateTimeField('提交时间', auto_now_add=True)
+    record_time = models.DateTimeField('更新时间', auto_now=True)
+    time = models.CharField('更新时间', max_length=250, blank=True, )
+    user = models.CharField('修改者', max_length=50, blank=True, )
+    status = models.BooleanField(default=False)
+    number = models.CharField('编号', max_length=50, blank=True)
+    record_update = models.TextField('记录更新', max_length=500,blank=True)
+    bug_describe = models.TextField('BUG简述', max_length=500,)
+    class Meta:
+        verbose_name = u'fae_fault'
+        verbose_name_plural = u'fae_bugsystem'
 
 
 class Smart(models.Model):
