@@ -1,0 +1,128 @@
+Adapter #0
+
+Enclosure Device ID: 252
+Slot Number: 4
+Enclosure position: 0
+Device Id: 7
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.102 GB [0x37c34800 Sectors]
+Firmware state: Online, Spun Up
+SAS Address(0): 0x4433221107000000
+Connected Port Number: 1(path0) 
+Inquiry Data: BTWL40940CRB480QGN  INTEL SSDSC2BB480G4                     D2010370
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None 
+Device Speed: 6.0Gb/s 
+Link Speed: 6.0Gb/s 
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+
+
+
+Enclosure Device ID: 252
+Slot Number: 5
+Enclosure position: 0
+Device Id: 6
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+Raw Size: 447.130 GB [0x37e436b0 Sectors]
+Non Coerced Size: 446.630 GB [0x37d436b0 Sectors]
+Coerced Size: 446.102 GB [0x37c34800 Sectors]
+Firmware state: Online, Spun Up
+SAS Address(0): 0x4433221106000000
+Connected Port Number: 0(path0) 
+Inquiry Data: PHWL452505QW480QGN  INTEL SSDSC2BB480G4                     D2010370
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None 
+Device Speed: 6.0Gb/s 
+Link Speed: 3.0Gb/s 
+Media Type: Solid State Device
+Drive:  Not Certified
+Drive Temperature : N/A
+
+
+
+Enclosure Device ID: 252
+Slot Number: 6
+Enclosure position: 0
+Device Id: 5
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1a94800 Sectors]
+Firmware state: Online, Spun Up
+SAS Address(0): 0x4433221105000000
+Connected Port Number: 2(path0) 
+Inquiry Data:             S1Z008MAST4000NM0033-9ZM170                     SN04    
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None 
+Device Speed: 6.0Gb/s 
+Link Speed: 6.0Gb/s 
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature :44C (111.20 F)
+
+
+
+Enclosure Device ID: 252
+Slot Number: 7
+Enclosure position: 0
+Device Id: 4
+Sequence Number: 2
+Media Error Count: 0
+Other Error Count: 0
+Predictive Failure Count: 0
+Last Predictive Failure Event Seq Number: 0
+PD Type: SATA
+Raw Size: 3.638 TB [0x1d1c0beb0 Sectors]
+Non Coerced Size: 3.637 TB [0x1d1b0beb0 Sectors]
+Coerced Size: 3.637 TB [0x1d1a94800 Sectors]
+Firmware state: Online, Spun Up
+SAS Address(0): 0x4433221104000000
+Connected Port Number: 3(path0) 
+Inquiry Data:             S1Z0050HST4000NM0033-9ZM170                     SN03    
+FDE Capable: Not Capable
+FDE Enable: Disable
+Secured: Unsecured
+Locked: Unlocked
+Needs EKM Attention: No
+Foreign State: None 
+Device Speed: 6.0Gb/s 
+Link Speed: 6.0Gb/s 
+Media Type: Hard Disk Device
+Drive:  Not Certified
+Drive Temperature :45C (113.00 F)
+
+
+
+
+Exit Code: 0x00
